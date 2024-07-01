@@ -33,5 +33,43 @@ public class ApplicationProperties {
             this.asyncStart = asyncStart;
         }
     }
+
     // jhipster-needle-application-properties-property-class
+
+    private String API_KEY;
+    private String base;
+    private String symbols;
+    private String exchangeRateUpdateInterval;
+
+    public String getAPI_KEY() {
+        return API_KEY;
+    }
+
+    public void setAPI_KEY(String API_KEY) {
+        this.API_KEY = API_KEY;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
+
+    public String getSymbols() {
+        return symbols;
+    }
+
+    public void setSymbols(String symbols) {
+        this.symbols = symbols;
+    }
+
+    public String getExchangeRateUpdateInterval() {
+        return exchangeRateUpdateInterval;
+    }
+
+    public void setExchangeRateUpdateInterval(String exchangeRateUpdateInterval) {
+        this.exchangeRateUpdateInterval = exchangeRateUpdateInterval;
+    }
 }

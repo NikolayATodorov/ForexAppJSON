@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (historyExchangeRatesJsonRequest()) {
+      <div>
+        <h2 data-cy="historyExchangeRatesJsonRequestDetailsHeading"><span>History Exchange Rates Json Request</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.id }}</span>
+          </dd>
+          <dt><span>Request Id</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.requestId }}</span>
+          </dd>
+          <dt><span>Timestamp</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.timestamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Client</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.client }}</span>
+          </dd>
+          <dt><span>Currency</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.currency }}</span>
+          </dd>
+          <dt><span>Period</span></dt>
+          <dd>
+            <span>{{ historyExchangeRatesJsonRequest()!.period }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button
+          type="button"
+          [routerLink]="['/history-exchange-rates-json-request', historyExchangeRatesJsonRequest()!.id, 'edit']"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

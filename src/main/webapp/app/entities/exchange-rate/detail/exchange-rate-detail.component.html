@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (exchangeRate()) {
+      <div>
+        <h2 data-cy="exchangeRateDetailsHeading"><span>Exchange Rate</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.id }}</span>
+          </dd>
+          <dt><span>Base</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.base }}</span>
+          </dd>
+          <dt><span>Timestamp</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.timestamp | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Usd</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.usd }}</span>
+          </dd>
+          <dt><span>Gbp</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.gbp }}</span>
+          </dd>
+          <dt><span>Chf</span></dt>
+          <dd>
+            <span>{{ exchangeRate()!.chf }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/exchange-rate', exchangeRate()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

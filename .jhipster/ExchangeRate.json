@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20240628091804"
+  },
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "base",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "3",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "usd",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "gbp",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "chf",
+      "fieldType": "BigDecimal"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "ExchangeRate",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

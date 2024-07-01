@@ -50,6 +50,9 @@ public class CacheConfiguration {
             createCache(cm, com.forex.test.domain.User.class.getName());
             createCache(cm, com.forex.test.domain.Authority.class.getName());
             createCache(cm, com.forex.test.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.forex.test.domain.ExchangeRate.class.getName());
+            createCache(cm, com.forex.test.domain.CurrentExchangeRatesJsonRequest.class.getName());
+            createCache(cm, com.forex.test.domain.HistoryExchangeRatesJsonRequest.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

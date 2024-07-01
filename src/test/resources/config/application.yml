@@ -89,7 +89,12 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  exchange-rate-update-interval: 1000
+  API_KEY: ''
+  base: 'EUR'
+  symbols: 'USD,GBP,CHF'
+
 management:
   health:
     mail:

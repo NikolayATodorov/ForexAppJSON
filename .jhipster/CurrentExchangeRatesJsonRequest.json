@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240628114613"
+  },
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "requestId",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "client",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "currency",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "3",
+      "fieldValidateRulesMinlength": "3"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "CurrentExchangeRatesJsonRequest",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

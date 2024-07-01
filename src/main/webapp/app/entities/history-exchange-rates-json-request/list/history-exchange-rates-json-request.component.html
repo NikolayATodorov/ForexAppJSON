@@ -1,0 +1,133 @@
+<div>
+  <h2 id="page-heading" data-cy="HistoryExchangeRatesJsonRequestHeading">
+    <span>History Exchange Rates Json Requests</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-history-exchange-rates-json-request"
+        [routerLink]="['/history-exchange-rates-json-request/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new History Exchange Rates Json Request</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (historyExchangeRatesJsonRequests?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No History Exchange Rates Json Requests found</span>
+    </div>
+  }
+
+  @if (historyExchangeRatesJsonRequests && historyExchangeRatesJsonRequests.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="requestId">
+              <div class="d-flex">
+                <span>Request Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="timestamp">
+              <div class="d-flex">
+                <span>Timestamp</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="client">
+              <div class="d-flex">
+                <span>Client</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="currency">
+              <div class="d-flex">
+                <span>Currency</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="period">
+              <div class="d-flex">
+                <span>Period</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (historyExchangeRatesJsonRequest of historyExchangeRatesJsonRequests; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/history-exchange-rates-json-request', historyExchangeRatesJsonRequest.id, 'view']">{{
+                  historyExchangeRatesJsonRequest.id
+                }}</a>
+              </td>
+              <td>{{ historyExchangeRatesJsonRequest.requestId }}</td>
+              <td>{{ historyExchangeRatesJsonRequest.timestamp | formatMediumDatetime }}</td>
+              <td>{{ historyExchangeRatesJsonRequest.client }}</td>
+              <td>{{ historyExchangeRatesJsonRequest.currency }}</td>
+              <td>{{ historyExchangeRatesJsonRequest.period }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/history-exchange-rates-json-request', historyExchangeRatesJsonRequest.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/history-exchange-rates-json-request', historyExchangeRatesJsonRequest.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button
+                    type="submit"
+                    (click)="delete(historyExchangeRatesJsonRequest)"
+                    class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
