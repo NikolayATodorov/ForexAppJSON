@@ -53,7 +53,7 @@ class ExchangeRateResourceIT {
     private static final BigDecimal DEFAULT_CHF = new BigDecimal(1);
     private static final BigDecimal UPDATED_CHF = new BigDecimal(2);
 
-    private static final String ENTITY_API_URL = "/api/exchange-rates";
+    private static final String ENTITY_API_URL = "/api/json_api";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
