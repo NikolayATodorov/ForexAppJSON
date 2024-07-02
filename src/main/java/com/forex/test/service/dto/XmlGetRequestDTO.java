@@ -2,16 +2,13 @@ package com.forex.test.service.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-public class HistoryRequest {
+public class XmlGetRequestDTO {
 
     @JacksonXmlProperty(isAttribute = true)
     private String consumer;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @JacksonXmlProperty(localName = "currency")
     private String currency;
-
-    @JacksonXmlProperty(isAttribute = true)
-    private String period;
 
     // Getters and setters
     public String getConsumer() {
@@ -28,13 +25,5 @@ public class HistoryRequest {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public String getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(String period) {
-        this.period = period;
     }
 }

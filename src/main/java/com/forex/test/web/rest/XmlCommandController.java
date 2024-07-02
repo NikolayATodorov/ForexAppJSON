@@ -1,6 +1,6 @@
 package com.forex.test.web.rest;
 
-import com.forex.test.service.dto.Command;
+import com.forex.test.service.dto.XmlCommandDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/xml_api")
-public class CommandController {
+public class XmlCommandController {
 
     @PostMapping(value = "/command", consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<Command> handleCommand(@RequestBody Command command) {
-        if (command.getGetRequest() != null) {
+    public ResponseEntity<XmlCommandDTO> handleCommand(@RequestBody XmlCommandDTO command) {
+        if (command.getXmlGetRequestDTO() != null) {
             // Process the GET request
             System.out.println("Received GET command ID: " + command.getId());
-            System.out.println("Consumer: " + command.getGetRequest().getConsumer());
-            System.out.println("Currency: " + command.getGetRequest().getCurrency());
+            System.out.println("Consumer: " + command.getXmlGetRequestDTO().getConsumer());
+            System.out.println("Currency: " + command.getXmlGetRequestDTO().getCurrency());
             // save the request in the tables
             // and get the response
 

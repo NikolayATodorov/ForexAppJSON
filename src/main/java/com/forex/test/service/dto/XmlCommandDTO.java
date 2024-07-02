@@ -4,16 +4,16 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 @JacksonXmlRootElement(localName = "command")
-public class Command {
+public class XmlCommandDTO {
 
     @JacksonXmlProperty(isAttribute = true)
     private String id;
 
     @JacksonXmlProperty(localName = "get")
-    private GetRequest getRequest;
+    private XmlGetRequestDTO xmlGetRequestDTO;
 
     @JacksonXmlProperty(localName = "history")
-    private HistoryRequest historyRequest;
+    private XmlHistoryRequestDTO xmlHistoryRequestDTO;
 
     // Getters and setters
     public String getId() {
@@ -24,19 +24,19 @@ public class Command {
         this.id = id;
     }
 
-    public GetRequest getGetRequest() {
-        return getRequest;
+    public XmlGetRequestDTO getXmlGetRequestDTO() {
+        return xmlGetRequestDTO;
     }
 
-    public void setGetRequest(GetRequest getRequest) {
-        this.getRequest = getRequest;
+    public void setXmlGetRequestDTO(XmlGetRequestDTO xmlGetRequestDTO) {
+        this.xmlGetRequestDTO = xmlGetRequestDTO;
     }
 
-    public HistoryRequest getHistoryRequest() {
-        return historyRequest;
+    public XmlHistoryRequestDTO getHistoryRequest() {
+        return xmlHistoryRequestDTO;
     }
 
-    public void setHistoryRequest(HistoryRequest historyRequest) {
-        this.historyRequest = historyRequest;
+    public void setHistoryRequest(XmlHistoryRequestDTO xmlHistoryRequestDTO) {
+        this.xmlHistoryRequestDTO = xmlHistoryRequestDTO;
     }
 }
