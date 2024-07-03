@@ -101,6 +101,7 @@ public class ExchangeRateResource {
         Optional<CurrentExchangeRatesJsonRequestDTO> existing = currentExchangeRatesJsonRequestService.findByRequestId(
             currentExchangeRatesJsonRequestDTO.getRequestId()
         );
+
         if (!existing.isEmpty()) {
             throw new BadRequestAlertException(
                 "A currentExchangeRatesJsonRequest with the provided request id already exists",

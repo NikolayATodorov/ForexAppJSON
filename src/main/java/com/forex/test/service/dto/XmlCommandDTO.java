@@ -32,11 +32,11 @@ public class XmlCommandDTO {
         this.xmlGetRequestDTO = xmlGetRequestDTO;
     }
 
-    public XmlHistoryRequestDTO getHistoryRequest() {
+    public XmlHistoryRequestDTO getXmlHistoryRequestDTO() {
         return xmlHistoryRequestDTO;
     }
 
-    public void setHistoryRequest(XmlHistoryRequestDTO xmlHistoryRequestDTO) {
+    public void setXmlHistoryRequestDTO(XmlHistoryRequestDTO xmlHistoryRequestDTO) {
         this.xmlHistoryRequestDTO = xmlHistoryRequestDTO;
     }
 }
