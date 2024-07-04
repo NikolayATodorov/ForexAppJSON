@@ -17,6 +17,22 @@ public interface HistoryExchangeRatesJsonRequestService {
     HistoryExchangeRatesJsonRequestDTO save(HistoryExchangeRatesJsonRequestDTO historyExchangeRatesJsonRequestDTO);
 
     /**
+     * Updates a historyExchangeRatesJsonRequest.
+     *
+     * @param historyExchangeRatesJsonRequestDTO the entity to update.
+     * @return the persisted entity.
+     */
+    HistoryExchangeRatesJsonRequestDTO update(HistoryExchangeRatesJsonRequestDTO historyExchangeRatesJsonRequestDTO);
+
+    /**
+     * Partially updates a historyExchangeRatesJsonRequest.
+     *
+     * @param historyExchangeRatesJsonRequestDTO the entity to update partially.
+     * @return the persisted entity.
+     */
+    Optional<HistoryExchangeRatesJsonRequestDTO> partialUpdate(HistoryExchangeRatesJsonRequestDTO historyExchangeRatesJsonRequestDTO);
+
+    /**
      * Get all the historyExchangeRatesJsonRequests.
      *
      * @return the list of entities.

@@ -46,6 +46,36 @@ public class CurrentExchangeRatesJsonRequestServiceImpl implements CurrentExchan
     }
 
     @Override
+    public CurrentExchangeRatesJsonRequestDTO update(CurrentExchangeRatesJsonRequestDTO currentExchangeRatesJsonRequestDTO) {
+        log.debug("Request to update CurrentExchangeRatesJsonRequest : {}", currentExchangeRatesJsonRequestDTO);
+        CurrentExchangeRatesJsonRequest currentExchangeRatesJsonRequest = currentExchangeRatesJsonRequestMapper.toEntity(
+            currentExchangeRatesJsonRequestDTO
+        );
+        currentExchangeRatesJsonRequest = currentExchangeRatesJsonRequestRepository.save(currentExchangeRatesJsonRequest);
+        return currentExchangeRatesJsonRequestMapper.toDto(currentExchangeRatesJsonRequest);
+    }
+
+    @Override
+    public Optional<CurrentExchangeRatesJsonRequestDTO> partialUpdate(
+        CurrentExchangeRatesJsonRequestDTO currentExchangeRatesJsonRequestDTO
+    ) {
+        log.debug("Request to partially update CurrentExchangeRatesJsonRequest : {}", currentExchangeRatesJsonRequestDTO);
+
+        return currentExchangeRatesJsonRequestRepository
+            .findById(currentExchangeRatesJsonRequestDTO.getId())
+            .map(existingCurrentExchangeRatesJsonRequest -> {
+                currentExchangeRatesJsonRequestMapper.partialUpdate(
+                    existingCurrentExchangeRatesJsonRequest,
+                    currentExchangeRatesJsonRequestDTO
+                );
+
+                return existingCurrentExchangeRatesJsonRequest;
+            })
+            .map(currentExchangeRatesJsonRequestRepository::save)
+            .map(currentExchangeRatesJsonRequestMapper::toDto);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<CurrentExchangeRatesJsonRequestDTO> findAll() {
         log.debug("Request to get all CurrentExchangeRatesJsonRequests");

@@ -17,6 +17,22 @@ public interface CurrentExchangeRatesJsonRequestService {
     CurrentExchangeRatesJsonRequestDTO save(CurrentExchangeRatesJsonRequestDTO currentExchangeRatesJsonRequestDTO);
 
     /**
+     * Updates a currentExchangeRatesJsonRequest.
+     *
+     * @param currentExchangeRatesJsonRequestDTO the entity to update.
+     * @return the persisted entity.
+     */
+    CurrentExchangeRatesJsonRequestDTO update(CurrentExchangeRatesJsonRequestDTO currentExchangeRatesJsonRequestDTO);
+
+    /**
+     * Partially updates a currentExchangeRatesJsonRequest.
+     *
+     * @param currentExchangeRatesJsonRequestDTO the entity to update partially.
+     * @return the persisted entity.
+     */
+    Optional<CurrentExchangeRatesJsonRequestDTO> partialUpdate(CurrentExchangeRatesJsonRequestDTO currentExchangeRatesJsonRequestDTO);
+
+    /**
      * Get all the currentExchangeRatesJsonRequests.
      *
      * @return the list of entities.

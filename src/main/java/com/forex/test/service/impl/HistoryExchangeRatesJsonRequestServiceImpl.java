@@ -46,6 +46,36 @@ public class HistoryExchangeRatesJsonRequestServiceImpl implements HistoryExchan
     }
 
     @Override
+    public HistoryExchangeRatesJsonRequestDTO update(HistoryExchangeRatesJsonRequestDTO historyExchangeRatesJsonRequestDTO) {
+        log.debug("Request to update HistoryExchangeRatesJsonRequest : {}", historyExchangeRatesJsonRequestDTO);
+        HistoryExchangeRatesJsonRequest historyExchangeRatesJsonRequest = historyExchangeRatesJsonRequestMapper.toEntity(
+            historyExchangeRatesJsonRequestDTO
+        );
+        historyExchangeRatesJsonRequest = historyExchangeRatesJsonRequestRepository.save(historyExchangeRatesJsonRequest);
+        return historyExchangeRatesJsonRequestMapper.toDto(historyExchangeRatesJsonRequest);
+    }
+
+    @Override
+    public Optional<HistoryExchangeRatesJsonRequestDTO> partialUpdate(
+        HistoryExchangeRatesJsonRequestDTO historyExchangeRatesJsonRequestDTO
+    ) {
+        log.debug("Request to partially update HistoryExchangeRatesJsonRequest : {}", historyExchangeRatesJsonRequestDTO);
+
+        return historyExchangeRatesJsonRequestRepository
+            .findById(historyExchangeRatesJsonRequestDTO.getId())
+            .map(existingHistoryExchangeRatesJsonRequest -> {
+                historyExchangeRatesJsonRequestMapper.partialUpdate(
+                    existingHistoryExchangeRatesJsonRequest,
+                    historyExchangeRatesJsonRequestDTO
+                );
+
+                return existingHistoryExchangeRatesJsonRequest;
+            })
+            .map(historyExchangeRatesJsonRequestRepository::save)
+            .map(historyExchangeRatesJsonRequestMapper::toDto);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<HistoryExchangeRatesJsonRequestDTO> findAll() {
         log.debug("Request to get all HistoryExchangeRatesJsonRequests");
