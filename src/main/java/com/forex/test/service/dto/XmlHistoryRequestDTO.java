@@ -11,7 +11,7 @@ public class XmlHistoryRequestDTO {
     private String currency;
 
     @JacksonXmlProperty(isAttribute = true)
-    private String period;
+    private Integer period;
 
     // Getters and setters
     public String getConsumer() {
@@ -30,11 +30,11 @@ public class XmlHistoryRequestDTO {
         this.currency = currency;
     }
 
-    public String getPeriod() {
+    public Integer getPeriod() {
         return period;
     }
 
-    public void setPeriod(String period) {
+    public void setPeriod(Integer period) {
         this.period = period;
     }
 }

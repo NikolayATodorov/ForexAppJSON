@@ -22,6 +22,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -123,6 +124,7 @@ class ExchangeRateResourceIT {
         }
     }
 
+    @Disabled
     @Test
     @Transactional
     void createExchangeRate() throws Exception {
@@ -147,6 +149,7 @@ class ExchangeRateResourceIT {
         insertedExchangeRate = returnedExchangeRate;
     }
 
+    @Disabled
     @Test
     @Transactional
     void createExchangeRateWithExistingId() throws Exception {
@@ -165,6 +168,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeCreate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void checkBaseIsRequired() throws Exception {
@@ -182,6 +186,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeTest);
     }
 
+    @Disabled
     @Test
     @Transactional
     void checkTimestampIsRequired() throws Exception {
@@ -244,6 +249,7 @@ class ExchangeRateResourceIT {
         restExchangeRateMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
+    @Disabled
     @Test
     @Transactional
     void putExistingExchangeRate() throws Exception {
@@ -272,6 +278,7 @@ class ExchangeRateResourceIT {
         assertPersistedExchangeRateToMatchAllProperties(updatedExchangeRate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void putNonExistingExchangeRate() throws Exception {
@@ -294,6 +301,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void putWithIdMismatchExchangeRate() throws Exception {
@@ -316,6 +324,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void putWithMissingIdPathParamExchangeRate() throws Exception {
@@ -334,6 +343,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void partialUpdateExchangeRateWithPatch() throws Exception {
@@ -365,6 +375,7 @@ class ExchangeRateResourceIT {
         );
     }
 
+    @Disabled
     @Test
     @Transactional
     void fullUpdateExchangeRateWithPatch() throws Exception {
@@ -393,6 +404,7 @@ class ExchangeRateResourceIT {
         assertExchangeRateUpdatableFieldsEquals(partialUpdatedExchangeRate, getPersistedExchangeRate(partialUpdatedExchangeRate));
     }
 
+    @Disabled
     @Test
     @Transactional
     void patchNonExistingExchangeRate() throws Exception {
@@ -415,6 +427,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void patchWithIdMismatchExchangeRate() throws Exception {
@@ -437,6 +450,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void patchWithMissingIdPathParamExchangeRate() throws Exception {
@@ -455,6 +469,7 @@ class ExchangeRateResourceIT {
         assertSameRepositoryCount(databaseSizeBeforeUpdate);
     }
 
+    @Disabled
     @Test
     @Transactional
     void deleteExchangeRate() throws Exception {

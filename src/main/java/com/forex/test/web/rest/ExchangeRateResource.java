@@ -1,13 +1,16 @@
 package com.forex.test.web.rest;
 
+import com.forex.test.domain.enumeration.ExtServiceName;
 import com.forex.test.repository.CurrentExchangeRatesJsonRequestRepository;
 import com.forex.test.repository.ExchangeRateRepository;
 import com.forex.test.repository.HistoryExchangeRatesJsonRequestRepository;
 import com.forex.test.service.CurrentExchangeRatesJsonRequestService;
 import com.forex.test.service.ExchangeRateService;
+import com.forex.test.service.ExtServiceRequestService;
 import com.forex.test.service.HistoryExchangeRatesJsonRequestService;
 import com.forex.test.service.dto.CurrentExchangeRatesJsonRequestDTO;
 import com.forex.test.service.dto.ExchangeRateDTO;
+import com.forex.test.service.dto.ExtServiceRequestDTO;
 import com.forex.test.service.dto.HistoryExchangeRatesJsonRequestDTO;
 import com.forex.test.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -31,7 +34,6 @@ import tech.jhipster.web.util.ResponseUtil;
  * REST controller for managing {@link com.forex.test.domain.ExchangeRate}.
  */
 @RestController
-//@RequestMapping("/api/exchange-rates")
 @RequestMapping("/api/json_api")
 public class ExchangeRateResource {
 
@@ -45,14 +47,11 @@ public class ExchangeRateResource {
     private String applicationName;
 
     private final ExchangeRateService exchangeRateService;
-
     private final ExchangeRateRepository exchangeRateRepository;
 
     private final CurrentExchangeRatesJsonRequestService currentExchangeRatesJsonRequestService;
-    private final CurrentExchangeRatesJsonRequestRepository currentExchangeRatesJsonRequestRepository;
-
     private final HistoryExchangeRatesJsonRequestService historyExchangeRatesJsonRequestService;
-    private final HistoryExchangeRatesJsonRequestRepository historyExchangeRatesJsonRequestRepository;
+    private final ExtServiceRequestService extServiceRequestService;
 
     @Value(value = "${application.exchange-rate-update-interval}")
     int updateInterval;
@@ -61,16 +60,14 @@ public class ExchangeRateResource {
         ExchangeRateService exchangeRateService,
         ExchangeRateRepository exchangeRateRepository,
         CurrentExchangeRatesJsonRequestService currentExchangeRatesJsonRequestService,
-        CurrentExchangeRatesJsonRequestRepository currentExchangeRatesJsonRequestRepository,
         HistoryExchangeRatesJsonRequestService historyExchangeRatesJsonRequestService,
-        HistoryExchangeRatesJsonRequestRepository historyExchangeRatesJsonRequestRepository
+        ExtServiceRequestService extServiceRequestService
     ) {
         this.exchangeRateService = exchangeRateService;
         this.exchangeRateRepository = exchangeRateRepository;
         this.currentExchangeRatesJsonRequestService = currentExchangeRatesJsonRequestService;
-        this.currentExchangeRatesJsonRequestRepository = currentExchangeRatesJsonRequestRepository;
         this.historyExchangeRatesJsonRequestService = historyExchangeRatesJsonRequestService;
-        this.historyExchangeRatesJsonRequestRepository = historyExchangeRatesJsonRequestRepository;
+        this.extServiceRequestService = extServiceRequestService;
     }
 
     /**
@@ -82,7 +79,6 @@ public class ExchangeRateResource {
      * if the currentExchangeRatesJsonRequest has already an ID,
      * or if the provided requestId already exists,
      * or with status {@code 204} if there is no current data after the last update.
-
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/current")
@@ -111,6 +107,15 @@ public class ExchangeRateResource {
         }
         currentExchangeRatesJsonRequestService.save(currentExchangeRatesJsonRequestDTO);
 
+        // save the request in the table for json & xml requests
+        ExtServiceRequestDTO extServiceRequestDTO = new ExtServiceRequestDTO();
+        extServiceRequestDTO.setServiceName(ExtServiceName.EXT_SERVICE_2.name());
+        extServiceRequestDTO.setRequestId(currentExchangeRatesJsonRequestDTO.getRequestId());
+        extServiceRequestDTO.setClientId(currentExchangeRatesJsonRequestDTO.getClient());
+        extServiceRequestDTO.setTimeStamp(currentExchangeRatesJsonRequestDTO.getTimestamp());
+        extServiceRequestService.save(extServiceRequestDTO);
+
+        // get the response
         Instant now = Instant.now();
         Instant startOfPeriod = now.minus(updateInterval, ChronoUnit.MINUTES);
 
@@ -162,6 +167,15 @@ public class ExchangeRateResource {
 
         historyExchangeRatesJsonRequestService.save(historyExchangeRatesJsonRequestDTO);
 
+        // save the request in the table for json & xml requests
+        ExtServiceRequestDTO extServiceRequestDTO = new ExtServiceRequestDTO();
+        extServiceRequestDTO.setServiceName(ExtServiceName.EXT_SERVICE_2.name());
+        extServiceRequestDTO.setRequestId(historyExchangeRatesJsonRequestDTO.getRequestId());
+        extServiceRequestDTO.setClientId(historyExchangeRatesJsonRequestDTO.getClient());
+        extServiceRequestDTO.setTimeStamp(historyExchangeRatesJsonRequestDTO.getTimestamp());
+        extServiceRequestService.save(extServiceRequestDTO);
+
+        // get the response
         Instant now = Instant.now();
         Instant startOfPeriod = now.minus(historyExchangeRatesJsonRequestDTO.getPeriod(), ChronoUnit.HOURS);
 
@@ -179,7 +193,7 @@ public class ExchangeRateResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new exchangeRateDTO, or with status {@code 400 (Bad Request)} if the exchangeRate has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
+    //    @PostMapping("")
     public ResponseEntity<ExchangeRateDTO> createExchangeRate(@Valid @RequestBody ExchangeRateDTO exchangeRateDTO)
         throws URISyntaxException {
         log.debug("REST request to save ExchangeRate : {}", exchangeRateDTO);
@@ -195,14 +209,14 @@ public class ExchangeRateResource {
     /**
      * {@code PUT  /exchange-rates/:id} : Updates an existing exchangeRate.
      *
-     * @param id the id of the exchangeRateDTO to save.
+     * @param id              the id of the exchangeRateDTO to save.
      * @param exchangeRateDTO the exchangeRateDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated exchangeRateDTO,
      * or with status {@code 400 (Bad Request)} if the exchangeRateDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the exchangeRateDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{id}")
+    //    @PutMapping("/{id}")
     public ResponseEntity<ExchangeRateDTO> updateExchangeRate(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody ExchangeRateDTO exchangeRateDTO
@@ -228,7 +242,7 @@ public class ExchangeRateResource {
     /**
      * {@code PATCH  /exchange-rates/:id} : Partial updates given fields of an existing exchangeRate, field will ignore if it is null
      *
-     * @param id the id of the exchangeRateDTO to save.
+     * @param id              the id of the exchangeRateDTO to save.
      * @param exchangeRateDTO the exchangeRateDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated exchangeRateDTO,
      * or with status {@code 400 (Bad Request)} if the exchangeRateDTO is not valid,
@@ -236,7 +250,7 @@ public class ExchangeRateResource {
      * or with status {@code 500 (Internal Server Error)} if the exchangeRateDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    //    @PatchMapping(value = "/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<ExchangeRateDTO> partialUpdateExchangeRate(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody ExchangeRateDTO exchangeRateDTO
@@ -291,7 +305,7 @@ public class ExchangeRateResource {
      * @param id the id of the exchangeRateDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/{id}")
+    //    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExchangeRate(@PathVariable("id") Long id) {
         log.debug("REST request to delete ExchangeRate : {}", id);
         exchangeRateService.delete(id);
