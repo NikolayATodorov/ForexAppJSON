@@ -50,6 +50,18 @@ spring:
   thymeleaf:
     cache: true
 
+  # default rabbitmq configuration
+  rabbitmq:
+    host: 'localhost'
+    port: 5672
+    username: 'guest'
+    password: 'guest'
+
+rabbitmq:
+  queue: 'extServiceRequestQueue'
+  exchange: 'extServiceRequestExchange'
+  routingkey: 'extServiceRequestRoutingKey'
+
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
 # keytool -genkey -alias forexapp -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650

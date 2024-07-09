@@ -48,6 +48,11 @@ spring:
   thymeleaf:
     mode: HTML
 
+rabbitmq:
+  queue: 'extServiceRequestQueue'
+  exchange: 'extServiceRequestExchange'
+  routingkey: 'extServiceRequestRoutingKey'
+
 server:
   port: 10344
   address: localhost

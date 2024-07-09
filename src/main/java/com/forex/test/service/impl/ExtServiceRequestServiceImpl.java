@@ -27,12 +27,16 @@ public class ExtServiceRequestServiceImpl implements ExtServiceRequestService {
 
     private final ExtServiceRequestMapper extServiceRequestMapper;
 
+    private final RabbitMQSender rabbitMQSender;
+
     public ExtServiceRequestServiceImpl(
         ExtServiceRequestRepository extServiceRequestRepository,
-        ExtServiceRequestMapper extServiceRequestMapper
+        ExtServiceRequestMapper extServiceRequestMapper,
+        RabbitMQSender rabbitMQSender
     ) {
         this.extServiceRequestRepository = extServiceRequestRepository;
         this.extServiceRequestMapper = extServiceRequestMapper;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     @Override
@@ -40,7 +44,13 @@ public class ExtServiceRequestServiceImpl implements ExtServiceRequestService {
         log.debug("Request to save ExtServiceRequest : {}", extServiceRequestDTO);
         ExtServiceRequest extServiceRequest = extServiceRequestMapper.toEntity(extServiceRequestDTO);
         extServiceRequest = extServiceRequestRepository.save(extServiceRequest);
-        return extServiceRequestMapper.toDto(extServiceRequest);
+        ExtServiceRequestDTO result = extServiceRequestMapper.toDto(extServiceRequest);
+
+        // Send the message to RabbitMQ
+        //        rabbitMQSender.send(result);
+        rabbitMQSender.send(extServiceRequest);
+
+        return result;
     }
 
     @Override

@@ -160,6 +160,18 @@ spring:
     ansi:
       console-available: true
 
+  # default rabbitmq configuration
+  rabbitmq:
+    host: 'localhost'
+    port: 5672
+    username: 'guest'
+    password: 'guest'
+
+rabbitmq:
+  queue: 'extServiceRequestQueue'
+  exchange: 'extServiceRequestExchange'
+  routingkey: 'extServiceRequestRoutingKey'
+
 server:
   servlet:
     session:
