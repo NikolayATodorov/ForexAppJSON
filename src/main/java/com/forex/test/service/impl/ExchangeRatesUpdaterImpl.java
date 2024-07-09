@@ -25,6 +25,8 @@ public class ExchangeRatesUpdaterImpl implements ExchangeRatesUpdater {
     private final Logger log = LoggerFactory.getLogger(ExchangeRatesUpdaterImpl.class);
     private final ExchangeRateService exchangeRateService;
 
+    private final RabbitMQSender rabbitMQSender;
+
     @Value("${application.API_KEY}")
     String API_KEY;
 
@@ -34,8 +36,9 @@ public class ExchangeRatesUpdaterImpl implements ExchangeRatesUpdater {
     @Value("${application.symbols}")
     String symbols;
 
-    public ExchangeRatesUpdaterImpl(ExchangeRateService exchangeRateService) {
+    public ExchangeRatesUpdaterImpl(ExchangeRateService exchangeRateService, RabbitMQSender rabbitMQSender) {
         this.exchangeRateService = exchangeRateService;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     public ExchangeRatesUpdater setAPI_KEY(String API_KEY) {
@@ -81,6 +84,10 @@ public class ExchangeRatesUpdaterImpl implements ExchangeRatesUpdater {
                 CurrencyRatesDTOToExchangeRateMapper m = new CurrencyRatesDTOToExchangeRateMapper();
                 ExchangeRateDTO exchangeRateDTO = m.toExchangeRateDTO(currencyRates);
                 exchangeRateService.save(exchangeRateDTO);
+
+                // Send the message to RabbitMQ
+                rabbitMQSender.sendExchangeRates(exchangeRateDTO);
+
                 reader.close();
             } else {
                 result.append("GET request not worked, Response Code: ").append(responseCode);

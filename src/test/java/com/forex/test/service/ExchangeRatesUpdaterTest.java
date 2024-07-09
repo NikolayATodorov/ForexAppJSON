@@ -5,9 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.forex.test.repository.ExchangeRateRepository;
-import com.forex.test.service.impl.ExchangeRateServiceImpl;
 import com.forex.test.service.impl.ExchangeRatesUpdaterImpl;
+import com.forex.test.service.impl.RabbitMQSender;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -22,6 +21,9 @@ public class ExchangeRatesUpdaterTest {
 
     @Autowired
     private ExchangeRateService exchangeRateService;
+
+    @Autowired
+    private RabbitMQSender rabbitMQSender;
 
     @Test
     public void testCallRestEndpoint_Success() throws Exception {
@@ -39,7 +41,7 @@ public class ExchangeRatesUpdaterTest {
         when(conn.getResponseCode()).thenReturn(200);
 
         // Call the method under test
-        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService);
+        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService, rabbitMQSender);
         String result = client.updateExchangeRates();
 
         // Verify the result
@@ -62,7 +64,7 @@ public class ExchangeRatesUpdaterTest {
         when(conn.getResponseCode()).thenReturn(404);
 
         // Call the method under test
-        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService);
+        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService, rabbitMQSender);
         String result = client.updateExchangeRates();
 
         // Verify the result
@@ -76,7 +78,7 @@ public class ExchangeRatesUpdaterTest {
     @Test
     public void testCallRestEndpoint_Exception() {
         // Call the method under test with an invalid URL
-        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService);
+        ExchangeRatesUpdater client = new ExchangeRatesUpdaterImpl(exchangeRateService, rabbitMQSender);
         String result = client.setAPI_KEY("").updateExchangeRates();
 
         // Verify the result

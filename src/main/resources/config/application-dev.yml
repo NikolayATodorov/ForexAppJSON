@@ -59,9 +59,14 @@ spring:
     password: 'guest'
 
 rabbitmq:
-  queue: 'extServiceRequestQueue'
-  exchange: 'extServiceRequestExchange'
-  routingkey: 'extServiceRequestRoutingKey'
+  external-service-request:
+    queue: 'extServiceRequestQueue'
+    exchange: 'extServiceRequestExchange'
+    routing-key: 'extServiceRequestRoutingKey'
+  exchange-rates:
+    queue: 'exchangeRatesQueue'
+    exchange: 'exchangeRatesExchange'
+    routing-key: 'exchangeRatesRoutingKey'
 
 server:
   port: 8080

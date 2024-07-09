@@ -12,31 +12,58 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfiguration {
 
-    @Value("${rabbitmq.queue}")
-    private String jsonQueue;
+    @Value("${rabbitmq.external-service-request.queue}")
+    private String extServiceQueue;
 
-    @Value("${rabbitmq.exchange}")
-    private String exchange;
+    @Value("${rabbitmq.external-service-request.exchange}")
+    private String extServiceExchange;
 
-    @Value("${rabbitmq.routingkey}")
-    private String routingKey;
+    @Value("${rabbitmq.external-service-request.routing-key}")
+    private String extServiceRoutingKey;
 
-    // spring bean for queue (store json messages)
+    @Value("${rabbitmq.exchange-rates.queue}")
+    private String exRatesQueue;
+
+    @Value("${rabbitmq.exchange-rates.exchange}")
+    private String exRatesExchange;
+
+    @Value("${rabbitmq.exchange-rates.routing-key}")
+    private String exRatesRoutingKey;
+
+    // spring bean for queue for external-service-request
     @Bean
-    public Queue jsonQueue() {
-        return new Queue(jsonQueue);
+    public Queue extServiceQueue() {
+        return new Queue(extServiceQueue);
     }
 
-    // spring bean for rabbitmq exchange
+    // spring bean for rabbitmq exchange for external-service-request
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(exchange);
+    public TopicExchange extServiceExchange() {
+        return new TopicExchange(extServiceExchange);
     }
 
-    // binding between json queue and exchange using routing key
+    // binding between external-service-request queue and exchange using routing key
     @Bean
-    public Binding jsonBinding() {
-        return BindingBuilder.bind(jsonQueue()).to(exchange()).with(routingKey);
+    public Binding extServiceBinding() {
+        return BindingBuilder.bind(extServiceQueue()).to(extServiceExchange()).with(extServiceRoutingKey);
+    }
+
+    // spring bean for queue for exchange-rates
+    @Bean
+    public Queue exRatesQueue() {
+        return new Queue(exRatesQueue);
+    }
+
+    // spring bean for rabbitmq exchange for exchange-rates
+    @Bean
+    public TopicExchange exRatesExchange() {
+        return new TopicExchange(exRatesExchange);
+    }
+
+    // binding between exchange-rates queue and exchange using routing key
+    @Bean
+    public Binding exRatesBinding() {
+        return BindingBuilder.bind(exRatesQueue()).to(exRatesExchange()).with(exRatesRoutingKey);
     }
 
     @Bean

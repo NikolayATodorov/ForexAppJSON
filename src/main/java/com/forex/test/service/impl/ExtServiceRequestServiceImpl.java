@@ -47,8 +47,7 @@ public class ExtServiceRequestServiceImpl implements ExtServiceRequestService {
         ExtServiceRequestDTO result = extServiceRequestMapper.toDto(extServiceRequest);
 
         // Send the message to RabbitMQ
-        //        rabbitMQSender.send(result);
-        rabbitMQSender.send(extServiceRequest);
+        rabbitMQSender.sendExtServiceRequests(result);
 
         return result;
     }
